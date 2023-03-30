@@ -18,6 +18,7 @@ import lombok.Setter;
 public class Data {
     @Id
     private Long id;
+    @Column()
     private String name;
 
 
