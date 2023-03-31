@@ -33,6 +33,7 @@ public class GetController {
         service.postRequest(data);
         List<Data> data1 = service.GetAllData();
         return data1;
+
     }
 
     @GetMapping("/getData")
