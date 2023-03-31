@@ -4,6 +4,7 @@ import com.example.getData.model.Data;
 import com.example.getData.repository.GetRepository;
 import com.example.getData.service.GetService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -33,6 +34,7 @@ public class GetController {
     }
 
     @GetMapping("/getData")
+    @Cacheable("datas")
     public List<Data> getAllData(){
         List<Data> data = service.GetAllData();
 
