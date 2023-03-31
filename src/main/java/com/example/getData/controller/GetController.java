@@ -4,9 +4,12 @@ import com.example.getData.model.Data;
 import com.example.getData.repository.GetRepository;
 import com.example.getData.service.GetService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,19 +28,17 @@ public class GetController {
     private GetService service;
 
     @PostMapping("/postData")
-    public ResponseEntity<Map<String, Boolean>> postRequest(@RequestBody Data data){
+    public List<Data> postRequest(@RequestBody List<Data> data){
 
-        Map<String, Boolean> map = new HashMap<>();
-        map.put("Post succesful", true);
         service.postRequest(data);
-        return new ResponseEntity<>(map, HttpStatus.CREATED);
+        List<Data> data1 = service.GetAllData();
+        return data1;
     }
 
     @GetMapping("/getData")
-    @Cacheable("datas")
+    @CachePut(value = "datas")
     public List<Data> getAllData(){
         List<Data> data = service.GetAllData();
-
         return data;
     }
 }
